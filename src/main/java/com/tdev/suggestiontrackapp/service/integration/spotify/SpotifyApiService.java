@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.tdev.suggestiontrackapp.config.ConfigApp;
+import com.tdev.suggestiontrackapp.enums.GenreEnum;
 import com.tdev.suggestiontrackapp.config.AppConstants;
 import com.tdev.suggestiontrackapp.model.recommendation.Generes;
 import com.tdev.suggestiontrackapp.model.recommendation.RecommendationResponse;
@@ -63,14 +64,14 @@ public class SpotifyApiService {
 		return result.getBody();
 	}
 	
-	public RecommendationResponse getRecommendationsByGenere(String genere) {
+	public RecommendationResponse getRecommendationsByGenere(GenreEnum genere) {
 		log.info("LOOKING FOR RECOMMENDATIONS OF TRACKS BY MUSICAL GENDER");
 		RestTemplate restTemplate = new RestTemplate();
 		
 		UriComponentsBuilder builder = UriComponentsBuilder
 			    .fromUriString(configApp.getUrlRecommendations())
-			    .queryParam("market", "BR")
-			    .queryParam("seed_genres", genere);
+			    .queryParam(AppConstants.QUERY_PARAM_MARKET, AppConstants.QUERY_PARAM_MARKET_VALUE)
+			    .queryParam(AppConstants.QUERY_PARAM_SEED_GENRES, genere.getValue());
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setBearerAuth(getAccessToken().getAccesToken());
