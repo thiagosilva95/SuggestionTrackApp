@@ -2,6 +2,7 @@ package com.tdev.suggestiontrackapp.service.integration.spotify;
 
 import java.util.Collections;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -13,15 +14,19 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.tdev.suggestiontrackapp.model.TokenSpotifyApiResponse;
+import com.tdev.suggestiontrackapp.config.ConfigApp;
 import com.tdev.suggestiontrackapp.model.recommendation.Generes;
 import com.tdev.suggestiontrackapp.model.recommendation.RecommendationResponse;
+import com.tdev.suggestiontrackapp.model.recommendation.TokenSpotifyApiResponse;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 public class SpotifyApiService {
+	
+	@Autowired
+	private ConfigApp configApp;
 
 	private String urlAccesToken = "https://accounts.spotify.com/api/token";
 	private String urlGenres = "https://api.spotify.com/v1/recommendations/available-genre-seeds";

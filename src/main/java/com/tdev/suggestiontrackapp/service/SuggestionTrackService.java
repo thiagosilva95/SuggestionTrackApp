@@ -1,4 +1,4 @@
-package com.tdev.suggestiontrackapp.service.integration;
+package com.tdev.suggestiontrackapp.service;
 
 import org.springframework.stereotype.Service;
 

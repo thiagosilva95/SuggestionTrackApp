@@ -1,4 +1,4 @@
-package com.tdev.suggestiontrackapp.model;
+package com.tdev.suggestiontrackapp.model.recommendation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tdev.suggestiontrackapp.model.CurrentWeatherResponse;
+import com.tdev.suggestiontrackapp.model.currentWeather.CurrentWeatherResponse;
 import com.tdev.suggestiontrackapp.service.integration.openweathermap.CurrentWeatherService;
 
 import lombok.extern.slf4j.Slf4j;
