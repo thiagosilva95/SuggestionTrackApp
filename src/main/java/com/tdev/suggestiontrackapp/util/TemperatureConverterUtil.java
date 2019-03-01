@@ -1,6 +1,6 @@
 package com.tdev.suggestiontrackapp.util;
 
-import com.tdev.suggestiontrackapp.TemperatureUnitEnum;
+import com.tdev.suggestiontrackapp.enums.TemperatureUnitEnum;
 
 public class TemperatureConverterUtil {
 

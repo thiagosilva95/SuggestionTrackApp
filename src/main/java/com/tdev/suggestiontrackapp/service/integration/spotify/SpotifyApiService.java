@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.tdev.suggestiontrackapp.config.ConfigApp;
+import com.tdev.suggestiontrackapp.config.AppConstants;
 import com.tdev.suggestiontrackapp.model.recommendation.Generes;
 import com.tdev.suggestiontrackapp.model.recommendation.RecommendationResponse;
 import com.tdev.suggestiontrackapp.model.recommendation.TokenSpotifyApiResponse;
@@ -27,27 +28,20 @@ public class SpotifyApiService {
 	
 	@Autowired
 	private ConfigApp configApp;
-
-	private String urlAccesToken = "https://accounts.spotify.com/api/token";
-	private String urlGenres = "https://api.spotify.com/v1/recommendations/available-genre-seeds";
-	private String urlRecommendations = "https://api.spotify.com/v1/recommendations";
-	private String clientId = "ae583995a2e149fdb43cdc2dc6c4d1c8";
-	private String clientSecret = "4e4b71ce14bd4dc780e018f4539697eb";
 	
 	public TokenSpotifyApiResponse getAccessToken() {
 		log.info("GETTING THE ACCES TOKEN");
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
-		headers.setBasicAuth(clientId, clientSecret);
+		headers.setBasicAuth(configApp.getClientIdSpotifyApi(), configApp.getClientSecretSpotifyApi());
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 		
 		MultiValueMap<String, String> map= new LinkedMultiValueMap<>();
-		map.add("grant_type", "client_credentials");
+		map.add(AppConstants.FORM_PARAM_GRANT_TYPE, AppConstants.FORM_PARAM_GRANT_TYPE_CLIENT_CREDENTIALS_VALUE);
 		
 		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
 		
-		TokenSpotifyApiResponse response = restTemplate.postForObject(urlAccesToken, request, TokenSpotifyApiResponse.class);
-		
+		TokenSpotifyApiResponse response = restTemplate.postForObject(configApp.getUrlAccessTokenSpotifyApi(), request, TokenSpotifyApiResponse.class);
 		
 		log.info("ACCES TOKEN SUCCESSFULLY OBTAINED");
 		return response;
@@ -61,10 +55,9 @@ public class SpotifyApiService {
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		
-		
 		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(headers);
 		
-		ResponseEntity<Generes> result = restTemplate.exchange(urlGenres, HttpMethod.GET, request, Generes.class);
+		ResponseEntity<Generes> result = restTemplate.exchange(configApp.getUrlAvailableGenres(), HttpMethod.GET, request, Generes.class);
 		
 		log.info("GENDERS GONE WITH SUCCESS");
 		return result.getBody();
@@ -75,13 +68,12 @@ public class SpotifyApiService {
 		RestTemplate restTemplate = new RestTemplate();
 		
 		UriComponentsBuilder builder = UriComponentsBuilder
-			    .fromUriString(urlRecommendations)
+			    .fromUriString(configApp.getUrlRecommendations())
 			    .queryParam("market", "BR")
 			    .queryParam("seed_genres", genere);
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setBearerAuth(getAccessToken().getAccesToken());
-		
 		
 		HttpEntity<String> request = new HttpEntity<>(headers);
 		
