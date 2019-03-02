@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tdev.suggestiontrackapp.model.currentWeather.CurrentWeatherResponse;
-import com.tdev.suggestiontrackapp.service.integration.openweathermap.CurrentWeatherService;
+import com.tdev.suggestiontrackapp.model.recommendation.RecommendationResponse;
+import com.tdev.suggestiontrackapp.service.SuggestionTrackService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,11 +20,13 @@ import lombok.extern.slf4j.Slf4j;
 public class SuggestionTrackController {
 	
 	@Autowired
-	private CurrentWeatherService service;
+	private SuggestionTrackService suggestionTrackService;
 	
-	@GetMapping("/{city}")
-	public ResponseEntity<CurrentWeatherResponse> getCurrentWeatherTest(@PathVariable String city) {
-		Optional<CurrentWeatherResponse> response = service.getCurrentWeather();
+	@GetMapping("/location/{city}")
+	public ResponseEntity<RecommendationResponse> getCurrentWeatherTest(@PathVariable String city) {
+		log.info("GETTING CURRENT CLIMATE OF THE CITY: {}", city);
+		
+		Optional<RecommendationResponse> response = suggestionTrackService.searchTrackRecommendationsByLocationWeather(city);
 		
 		return response.isPresent() ? ResponseEntity.ok(response.get()) : ResponseEntity.notFound().build();
 	}

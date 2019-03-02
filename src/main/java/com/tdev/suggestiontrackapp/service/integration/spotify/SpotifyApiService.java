@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -78,9 +79,17 @@ public class SpotifyApiService {
 		
 		HttpEntity<String> request = new HttpEntity<>(headers);
 		
-		RecommendationResponse response = restTemplate.postForObject(builder.toUriString(), request, RecommendationResponse.class);
+	
+		ResponseEntity<RecommendationResponse> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, request, RecommendationResponse.class);
+
+		RecommendationResponse responseBody = null;
+		if (response.getStatusCode().equals(HttpStatus.OK)) {
+			responseBody = response.getBody();
+		} else if(response.getStatusCode().equals(HttpStatus.UNAUTHORIZED)) {
+			throw new RuntimeException("");
+		}
 		
 		log.info("TRACKS RECOMMENDATIONS GETTING SUCCESSFULLY");
-		return response;
+		return responseBody;
 	}
 }
