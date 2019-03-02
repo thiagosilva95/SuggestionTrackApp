@@ -12,6 +12,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.tdev.suggestiontrackapp.config.ConfigApp;
 import com.tdev.suggestiontrackapp.config.AppConstants;
 import com.tdev.suggestiontrackapp.model.currentWeather.CurrentWeatherResponse;
+import com.tdev.suggestiontrackapp.util.AppUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,8 +23,8 @@ public class CurrentWeatherService {
 	@Autowired
 	private ConfigApp configApp;
 	
-	public Optional<CurrentWeatherResponse> getCurrentWeatherByCityId() {		
-		log.info("GETTING CURRENT WEATHER");
+	public Optional<CurrentWeatherResponse> getCurrentWeatherByCityId(String citysId) {		
+		log.info("GETTING CURRENT WEATHER BY CITY ID: {}", citysId);
 		UriComponentsBuilder builder = UriComponentsBuilder
 			    .fromUriString(configApp.getUrlCurrentWeather())
 			    .queryParam(AppConstants.HEADER_APP_ID_OPEN_WEATHER_MAP, configApp.getAppIdOpenWeatherMap())
@@ -33,13 +34,13 @@ public class CurrentWeatherService {
 		CurrentWeatherResponse response = restTemplate
 				  .getForObject(builder.toUriString(), CurrentWeatherResponse.class);
 		
-		log.info("CURRENT WEATHER SUCCESSFULLY OBTAINED");
+		log.info("CURRENT WEATHER SUCCESSFULLY OBTAINED - [response]: {}", AppUtil.convertObjectToStringJson(response));
 		return Optional.of(response);
 	}
 	
-	public Optional<CurrentWeatherResponse> getCurrentWeatherByCitysName(String name) {		
-		log.info("GETTING CURRENT WEATHER");
-		List<String> params = Arrays.asList(new String[] {name, "br"});
+	public Optional<CurrentWeatherResponse> getCurrentWeatherByCitysName(String citysName) {		
+		log.info("GETTING CURRENT WEATHER BY CITYS NAME: {}", citysName);
+		List<String> params = Arrays.asList(new String[] {citysName, "br"});
 		UriComponentsBuilder builder = UriComponentsBuilder
 			    .fromUriString(configApp.getUrlCurrentWeather())
 			    .queryParam(AppConstants.HEADER_APP_ID_OPEN_WEATHER_MAP, configApp.getAppIdOpenWeatherMap())
@@ -49,7 +50,7 @@ public class CurrentWeatherService {
 		CurrentWeatherResponse response = restTemplate
 				  .getForObject(builder.toUriString(), CurrentWeatherResponse.class);
 		
-		log.info("CURRENT WEATHER SUCCESSFULLY OBTAINED");
+		log.info("CURRENT WEATHER SUCCESSFULLY OBTAINED - [response]: {}", AppUtil.convertObjectToStringJson(response));
 		return Optional.of(response);
 	}
 }

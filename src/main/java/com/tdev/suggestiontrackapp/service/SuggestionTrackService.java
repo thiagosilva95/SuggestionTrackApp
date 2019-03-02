@@ -28,6 +28,7 @@ public class SuggestionTrackService {
 	
 	
 	public Optional<RecommendationResponse> searchTrackRecommendationsByLocationWeather(String city) {
+
 		RecommendationResponse recommendationResponse = null;
 		
 		Optional<CurrentWeatherResponse> currentWeatherCity = currentWeatherService.getCurrentWeatherByCitysName(city);
@@ -37,6 +38,7 @@ public class SuggestionTrackService {
 			Double convertTemp = TemperatureConverterUtil.convertTemp(TemperatureUnitEnum.KELVIN, 
 																	  temp, 
 																	  TemperatureUnitEnum.CELSIUS);
+			log.info("CURRENT TEMPERATURE OF THE CITY OF {} IS {} DEGREES CELSIUS", city, convertTemp);
 			
 			if (convertTemp > 30) {
 				recommendationResponse = spotifyApiService.getRecommendationsByGenere(GenreEnum.PARTY);

@@ -24,7 +24,7 @@ public class SuggestionTrackController {
 	
 	@GetMapping("/location/{city}")
 	public ResponseEntity<RecommendationResponse> getCurrentWeatherTest(@PathVariable String city) {
-		log.info("GETTING CURRENT CLIMATE OF THE CITY: {}", city);
+		log.info("GETTING RECOMMENDATIONS ACCORDING TO THE CLIMATE OF THE CITY OF: {}", city);
 		
 		Optional<RecommendationResponse> response = suggestionTrackService.searchTrackRecommendationsByLocationWeather(city);
 		

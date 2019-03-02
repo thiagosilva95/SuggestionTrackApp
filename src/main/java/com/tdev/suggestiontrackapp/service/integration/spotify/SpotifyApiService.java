@@ -66,23 +66,21 @@ public class SpotifyApiService {
 		return result.getBody();
 	}
 	
-	public RecommendationResponse getRecommendationsByGenere(GenreEnum genere) {
-		log.info("LOOKING FOR RECOMMENDATIONS OF TRACKS BY MUSICAL GENDER");
+	public RecommendationResponse getRecommendationsByGenere(GenreEnum genre) {
+		log.info("LOOKING FOR RECOMMENDATIONS OF TRACKS BY MUSICAL GENRE: {}", genre);
 		RestTemplate restTemplate = new RestTemplate();
 		
 		UriComponentsBuilder builder = UriComponentsBuilder
 			    .fromUriString(configApp.getUrlRecommendations())
 			    .queryParam(AppConstants.QUERY_PARAM_MARKET, AppConstants.QUERY_PARAM_MARKET_VALUE)
-			    .queryParam(AppConstants.QUERY_PARAM_SEED_GENRES, genere.getValue());
+			    .queryParam(AppConstants.QUERY_PARAM_SEED_GENRES, genre.getValue());
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setBearerAuth(getAccessToken().getAccesToken());
 		
 		HttpEntity<String> request = new HttpEntity<>(headers);
 		
-	
 		ResponseEntity<RecommendationResponse> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, request, RecommendationResponse.class);
-		log.info("[response]: {}", response);
 		
 		RecommendationResponse responseBody = null;
 		if (response.getStatusCode().equals(HttpStatus.OK)) {
