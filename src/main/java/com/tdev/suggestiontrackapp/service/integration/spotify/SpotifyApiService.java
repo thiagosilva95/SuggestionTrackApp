@@ -21,6 +21,7 @@ import com.tdev.suggestiontrackapp.config.AppConstants;
 import com.tdev.suggestiontrackapp.model.recommendation.Generes;
 import com.tdev.suggestiontrackapp.model.recommendation.RecommendationResponse;
 import com.tdev.suggestiontrackapp.model.recommendation.TokenSpotifyApiResponse;
+import com.tdev.suggestiontrackapp.util.AppUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -81,7 +82,8 @@ public class SpotifyApiService {
 		
 	
 		ResponseEntity<RecommendationResponse> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, request, RecommendationResponse.class);
-
+		log.info("[response]: {}", response);
+		
 		RecommendationResponse responseBody = null;
 		if (response.getStatusCode().equals(HttpStatus.OK)) {
 			responseBody = response.getBody();
@@ -89,7 +91,7 @@ public class SpotifyApiService {
 			throw new RuntimeException("");
 		}
 		
-		log.info("TRACKS RECOMMENDATIONS GETTING SUCCESSFULLY");
+		log.info("TRACKS RECOMMENDATIONS GETTING SUCCESSFULLY - [responseBody]: {}", AppUtil.convertObjectToStringJson(responseBody));
 		return responseBody;
 	}
 }
