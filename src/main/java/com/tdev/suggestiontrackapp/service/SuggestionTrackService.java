@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tdev.suggestiontrackapp.config.SpotifyApiConfig;
 import com.tdev.suggestiontrackapp.enums.GenreEnum;
 import com.tdev.suggestiontrackapp.enums.TemperatureUnitEnum;
 import com.tdev.suggestiontrackapp.model.currentWeather.CurrentWeatherResponse;
