@@ -86,7 +86,8 @@ public class SpotifyApiService {
 		if (response.getStatusCode().equals(HttpStatus.OK)) {
 			responseBody = response.getBody();
 		} else if(response.getStatusCode().equals(HttpStatus.UNAUTHORIZED)) {
-			throw new RuntimeException("");
+			throw new RuntimeException("FALED");
+			// TODO GET REFRESH TOKEN
 		}
 		
 		log.info("TRACKS RECOMMENDATIONS GETTING SUCCESSFULLY - [responseBody]: {}", AppUtil.convertObjectToStringJson(responseBody));
