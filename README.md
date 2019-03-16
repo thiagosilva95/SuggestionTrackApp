@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/thiagosilva95/suggestion-track-app.svg?branch=master)](https://travis-ci.org/thiagosilva95/suggestion-track-app)
+
 # SuggestionTrackApp
 Project to suggest music track according the temperature
 
