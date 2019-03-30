@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/thiagosilva95/suggestion-track-app.svg?branch=master)](https://travis-ci.org/thiagosilva95/suggestion-track-app)
 
+As a demo example, make a GET request for the endpoint: https://suggestion-track-app.herokuapp.com/api/suggestion/location/Recife
+
 # SuggestionTrackApp
 Project to suggest music track according the temperature
 
